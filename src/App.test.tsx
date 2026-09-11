@@ -28,10 +28,10 @@ it('renders the course title and start action', () => {
   );
 });
 
-it('includes the safe code laboratory and code-quality exercise', () => {
+it('includes the code-quality exercise and removes the code laboratory', () => {
   render(<App />);
 
-  expect(screen.getByRole('heading', { name: /лаборатория кода/i })).toBeInTheDocument();
+  expect(screen.queryByRole('heading', { name: /лаборатория кода/i })).toBeNull();
   expect(screen.getByRole('heading', { name: /найдите ошибку/i })).toBeInTheDocument();
 });
 
@@ -39,7 +39,7 @@ it('resets child activities after confirmed global reset and lets the game compl
   render(<App />);
 
   completeOrderGame();
-  expect(screen.getByLabelText(/прогресс курса: 23%/i)).toBeInTheDocument();
+  expect(screen.getByLabelText(/прогресс курса: 33%/i)).toBeInTheDocument();
 
   fireEvent.click(screen.getByRole('radio', { name: /всегда рисует интерфейс/i }));
   expect(screen.getByText(/пока неверно/i).closest('.quiz-feedback')).toHaveClass('quiz-feedback-error');
@@ -56,5 +56,5 @@ it('resets child activities after confirmed global reset and lets the game compl
   expect(screen.getByLabelText(/прогресс курса: 0%/i)).toBeInTheDocument();
 
   completeOrderGame();
-  expect(screen.getByLabelText(/прогресс курса: 15%/i)).toBeInTheDocument();
+  expect(screen.getByLabelText(/прогресс курса: 25%/i)).toBeInTheDocument();
 });

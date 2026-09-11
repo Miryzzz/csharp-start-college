@@ -5,7 +5,6 @@ export type Theme = 'dark' | 'light';
 export interface CourseState {
   theme: Theme;
   visitedTopics: TopicId[];
-  labComplete: boolean;
   gameComplete: boolean;
   quizAnswers: Record<string, number>;
   quizComplete: boolean;
@@ -14,7 +13,6 @@ export interface CourseState {
 export type CourseAction =
   | { type: 'SET_THEME'; theme: Theme }
   | { type: 'VISIT_TOPIC'; id: TopicId }
-  | { type: 'COMPLETE_LAB' }
   | { type: 'COMPLETE_GAME' }
   | { type: 'ANSWER_QUIZ'; questionId: string; answer: number }
   | { type: 'COMPLETE_QUIZ' }
@@ -23,7 +21,6 @@ export type CourseAction =
 export const initialCourseState: CourseState = {
   theme: 'dark',
   visitedTopics: [],
-  labComplete: false,
   gameComplete: false,
   quizAnswers: {},
   quizComplete: false,
@@ -37,8 +34,6 @@ export function courseReducer(state: CourseState, action: CourseAction): CourseS
       return state.visitedTopics.includes(action.id)
         ? state
         : { ...state, visitedTopics: [...state.visitedTopics, action.id] };
-    case 'COMPLETE_LAB':
-      return { ...state, labComplete: true };
     case 'COMPLETE_GAME':
       return { ...state, gameComplete: true };
     case 'ANSWER_QUIZ':
@@ -53,9 +48,8 @@ export function courseReducer(state: CourseState, action: CourseAction): CourseS
 export function selectProgress(state: CourseState): number {
   const visitedCount = new Set(state.visitedTopics.filter((id) => topicIds.includes(id))).size;
   const topicProgress = (visitedCount / topicIds.length) * 40;
-  const activityProgress = (state.labComplete ? 20 : 0)
-    + (state.gameComplete ? 15 : 0)
-    + (state.quizComplete ? 25 : 0);
+  const activityProgress = (state.gameComplete ? 25 : 0)
+    + (state.quizComplete ? 35 : 0);
 
   return Math.round(Math.min(100, topicProgress + activityProgress));
 }

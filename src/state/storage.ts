@@ -14,7 +14,6 @@ function isCourseState(value: unknown): value is CourseState {
   return isTheme(candidate.theme)
     && Array.isArray(candidate.visitedTopics)
     && candidate.visitedTopics.every((id): id is TopicId => topicIds.includes(id as TopicId))
-    && typeof candidate.labComplete === 'boolean'
     && typeof candidate.gameComplete === 'boolean'
     && typeof candidate.quizAnswers === 'object'
     && candidate.quizAnswers !== null

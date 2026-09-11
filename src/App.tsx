@@ -7,7 +7,6 @@ import { ProgrammingFlow } from './components/ProgrammingFlow';
 import { TopicExplorer } from './components/TopicExplorer';
 import type { TopicId } from './content/course';
 import { OrderGame } from './features/game/OrderGame';
-import { CodeLab } from './features/lab/CodeLab';
 import { Quiz } from './features/quiz/Quiz';
 import { FindError } from './features/rules/FindError';
 import { RulesGrid } from './features/rules/RulesGrid';
@@ -71,10 +70,6 @@ export function App() {
 
       <ProgrammingFlow />
       <TopicExplorer onVisit={visitTopic} />
-
-      <section className="lab-section section-shell" id="lab" aria-label="Лаборатория кода">
-        <CodeLab onComplete={() => dispatch({ type: 'COMPLETE_LAB' })} />
-      </section>
 
       <section className="rules-section section-shell" id="rules" aria-labelledby="rules-title">
         <div className="section-intro">

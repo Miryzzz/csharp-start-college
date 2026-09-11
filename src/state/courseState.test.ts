@@ -21,19 +21,17 @@ describe('course state', () => {
     expect(selectProgress(twice)).toBe(8);
   });
 
-  it('weights completed course activities as 40, 20, 15, and 25 percent', () => {
+  it('weights completed course activities as 40, 25, and 35 percent', () => {
     const completedTopicIds: TopicId[] = ['variables', 'io', 'conditions', 'loops', 'methods'];
     const topicsComplete = completedTopicIds.reduce(
       (state, id) => courseReducer(state, { type: 'VISIT_TOPIC', id }),
       initialCourseState,
     );
-    const labComplete = courseReducer(topicsComplete, { type: 'COMPLETE_LAB' });
-    const gameComplete = courseReducer(labComplete, { type: 'COMPLETE_GAME' });
+    const gameComplete = courseReducer(topicsComplete, { type: 'COMPLETE_GAME' });
     const quizComplete = courseReducer(gameComplete, { type: 'COMPLETE_QUIZ' });
 
     expect(selectProgress(topicsComplete)).toBe(40);
-    expect(selectProgress(labComplete)).toBe(60);
-    expect(selectProgress(gameComplete)).toBe(75);
+    expect(selectProgress(gameComplete)).toBe(65);
     expect(selectProgress(quizComplete)).toBe(100);
   });
 
